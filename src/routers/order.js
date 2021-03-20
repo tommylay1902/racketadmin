@@ -15,11 +15,13 @@ router.get("/orders/:id", auth, async (req, res) => {
         });
 
         if (!customer) return res.status(404).send();
-        const orders = await Orders.find({
+        const orders = await Order.find({
             customer: customer._id,
         });
         res.send(orders);
-    } catch (e) {}
+    } catch (e) {
+        res.send(400).status();
+    }
 });
 
 /// :id = customer id
