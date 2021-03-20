@@ -21,22 +21,6 @@ app.get("/", async (req, res) => {
     res.send({
         welcome:
             "Welcome to racket admin api. An API built for organizing tennis rackets for your customers. (still in development)",
-        getEndPoints: {
-            user: {
-                userProfile:
-                    "/users/profile: view user profile (after authenticated)",
-            },
-            customer: {
-                getCustomers:
-                    "/customers: get customers associated with your account",
-            },
-        },
-        postEndPoints: {
-            users: {
-                createUser: "/users : create a user account",
-                login: "/users/login : login to your account",
-            },
-        },
     });
 });
 
