@@ -5,7 +5,6 @@ const Customer = require("../models/customer");
 const router = new express.Router();
 
 router.get("/customers", auth, async (req, res) => {
-    //implement pagination later
     try {
         const cust = await Customer.find({ user: req.user._id });
         res.send(cust);

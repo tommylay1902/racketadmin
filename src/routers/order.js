@@ -5,6 +5,24 @@ const router = new express.Router();
 const Order = require("../models/order");
 const Customer = require("../models/customer");
 
+/// update for get orders
+/// :id = customer
+router.get("orders/:id", auth, async (req, res) => {
+    try {
+        const customer = await Customer.findOne({
+            _id: req.params.id,
+            user: req.user._id,
+        });
+
+        if (!customer) return res.status(404).send();
+        const orders = await Orders.find({
+            customer: customer._id,
+        });
+        res.send(orders);
+    } catch (e) {}
+});
+
+/// :id = customer id
 router.post("/orders/:id", auth, async (req, res) => {
     try {
         const customer = await Customer.findOne({
@@ -23,6 +41,7 @@ router.post("/orders/:id", auth, async (req, res) => {
     }
 });
 
+//:id = order id
 router.delete("/orders/:id", auth, async (req, res) => {
     try {
         //find order with given id
@@ -30,7 +49,7 @@ router.delete("/orders/:id", auth, async (req, res) => {
             _id: req.params.id,
         });
 
-        //no order -> bad reauest
+        //no order -> 404
         if (!order) return res.status(400).send();
 
         //find the customer with the given order and current user
@@ -39,8 +58,8 @@ router.delete("/orders/:id", auth, async (req, res) => {
             user: req.user._id,
         });
 
-        // no customer -> bad request
-        if (!customer) return res.send(400).send();
+        // no customer -> 404
+        if (!customer) return res.send(404).send();
 
         await order.remove();
         res.send();
