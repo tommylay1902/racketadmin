@@ -14,7 +14,7 @@ router.get("/customers", auth, async (req, res) => {
 
 router.post("/customers", auth, async (req, res) => {
     try {
-        const cust = await new Customer({
+        const cust = new Customer({
             ...req.body,
             user: req.user._id,
         });

@@ -10,11 +10,12 @@ router.get("/users/profile", auth, async (req, res) => {
 
 router.post("/users", async (req, res) => {
     try {
-        const user = await new User(req.body);
+        const user = new User(req.body);
         await user.save();
         const token = await user.generateAuthToken();
         res.send({ user, token });
     } catch (e) {
+        console.log(e);
         res.status(400).send();
     }
 });
@@ -25,7 +26,7 @@ router.post("/users/login", async (req, res) => {
         const token = await user.generateAuthToken();
         res.send({ user, token });
     } catch (e) {
-        res.send(e);
+        res.status(400).send(e);
     }
 });
 
