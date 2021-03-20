@@ -35,6 +35,7 @@ router.delete("/customers/:id", auth, async (req, res) => {
         //no customer -> bad reauest
         if (!customer) return res.status(400).send();
         await customer.remove();
+        res.send();
     } catch (e) {
         res.status().send();
     }

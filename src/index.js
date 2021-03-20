@@ -35,7 +35,16 @@ app.get("/", async (req, res) => {
                 "https://racketadmin.herokuapp.com/customers",
             "create order(need authentication)":
                 "https://racketadmin.herokuapp.com/orders/<customer-id>",
-            "": "",
+        },
+        DELETE: {
+            "delete user": "https://racketadmin.herokuapp.com/users/me",
+            "delete customer":
+                "https://racketadmin.herokuapp.com/customers/<customer-id>",
+            "delete order":
+                "https://racketadmin.herokuapp.com/orders/<order-id>",
+        },
+        PUT: {
+            empty: "will update api for put operations",
         },
     });
 });
