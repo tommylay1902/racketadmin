@@ -21,6 +21,22 @@ app.get("/", async (req, res) => {
     res.send({
         welcome:
             "Welcome to racket admin api. An API built for organizing tennis rackets for your customers. (still in development)",
+        GET: {
+            "get users profile (need authentication)":
+                "https://racketadmin.herokuapp.com/users/profile",
+            "get customers (need authentication)":
+                "https://racketadmin.herokuapp.com/users/customers",
+        },
+        POST: {
+            "create user": "https://racketadmin.herokuapp.com/users/",
+            "login user": "https://racketadmin.herokuapp.com/users/login",
+            "logout user": "https://racketadmin.herokuapp.com/users/logout",
+            "create customer (need authentication)":
+                "https://racketadmin.herokuapp.com/customers",
+            "create order(need authentication)":
+                "https://racketadmin.herokuapp.com/orders/<customer-id>",
+            "": "",
+        },
     });
 });
 
