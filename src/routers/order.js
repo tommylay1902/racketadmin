@@ -7,7 +7,7 @@ const Customer = require("../models/customer");
 
 /// update for get orders
 /// :id = customer
-router.get("orders/:id", auth, async (req, res) => {
+router.get("/orders/:id", auth, async (req, res) => {
     try {
         const customer = await Customer.findOne({
             _id: req.params.id,
