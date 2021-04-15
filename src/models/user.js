@@ -55,7 +55,10 @@ userSchema.statics.findUser = async (email, pass) => {
 userSchema.methods.generateAuthToken = async function () {
     try {
         const user = this;
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+        const token = jwt.sign(
+            { _id: user._id },
+            process.env.JWT_SECRET || "thisisasecretformformyapp"
+        );
         user.tokens = user.tokens.concat({ token });
         await user.save();
         return token;

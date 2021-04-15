@@ -4,6 +4,7 @@ const auth = require("../middleware/auth");
 const router = new express.Router();
 const Order = require("../models/order");
 const Customer = require("../models/customer");
+const { ObjectId } = require("mongoose");
 
 /// update for get orders
 /// :id = customer
@@ -21,6 +22,30 @@ router.get("/orders/:id", auth, async (req, res) => {
         res.send(orders);
     } catch (e) {
         res.send(400).status();
+    }
+});
+
+//will get all orders pertaining to a user
+router.get("/orders", auth, async (req, res) => {
+    try {
+        //get the customers with corresponding user id
+        const customers = await Customer.find({
+            user: req.user._id,
+        });
+        //user does not have access to customer if not found
+        if (!customers) return res.status(404).send();
+        //if found, find orders for these customers
+        const idArr = customers.map((e) => {
+            return e._id;
+        });
+
+        const orders = await Order.find({
+            customer: { $in: idArr },
+        });
+        res.send(orders);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(400);
     }
 });
 

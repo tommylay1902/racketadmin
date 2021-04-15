@@ -3,6 +3,7 @@ const userRouter = require("./routers/user");
 const orderRouter = require("./routers/order");
 const customerRouter = require("./routers/customer");
 const cors = require("cors");
+require("dotenv").config();
 const app = express();
 
 const port = process.env.PORT;
@@ -49,6 +50,6 @@ app.get("/", async (req, res) => {
     });
 });
 
-app.listen(port, () => {
+app.listen(port || 3001, () => {
     if (port === 3001) console.log(`http:localhost/${port}`);
 });
