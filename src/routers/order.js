@@ -32,6 +32,7 @@ router.get("/orders", auth, async (req, res) => {
         const customers = await Customer.find({
             user: req.user._id,
         });
+
         //user does not have access to customer if not found
         if (!customers) return res.status(404).send();
         //if found, find orders for these customers
@@ -91,6 +92,50 @@ router.delete("/orders/:id", auth, async (req, res) => {
         await order.remove();
         res.send();
     } catch (e) {}
+});
+
+router.patch("/orders/:id", auth, async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = [
+        "racketBrand",
+        "model",
+        "stringPattern",
+        "recTension",
+        "stringType",
+    ];
+    //checks to see if every element arr is valid update parameter
+    const isAllowed = updates.every((i) => allowedUpdates.includes(i));
+
+    //return bad request if any update parameters are not allowed
+    if (!isAllowed)
+        return res.status(400).send({ error: "invalid operation!" });
+
+    try {
+        const customers = await Customer.find({
+            user: req.user._id,
+        });
+
+        if (!customers) return res.sendStatus(404);
+
+        const idArr = customers.map((e) => {
+            return e._id;
+        });
+
+        const order = await Order.findOne({
+            $and: [{ _id: req.params.id }, { customer: { $in: idArr } }],
+        });
+
+        if (!order) return res.sendStatus(400);
+
+        updates.forEach((update) => {
+            console.log(update);
+            order[update] = req.body[update];
+        });
+        await order.save();
+        res.send(order);
+    } catch (e) {
+        res.status(400).send();
+    }
 });
 
 module.exports = router;
