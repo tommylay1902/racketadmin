@@ -9,7 +9,11 @@ orderSchema = new mongoose.Schema(
         stringPattern: String,
         recTension: String,
         stringType: String,
-        completed: Boolean,
+        completed: {
+            type: Boolean,
+            default: false,
+        },
+
         customer: {
             type: mongoose.Schema.Types.ObjectId,
             //implement required customer later

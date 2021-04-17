@@ -56,7 +56,7 @@ router.post("/orders/:id", auth, async (req, res) => {
             _id: req.params.id,
         });
 
-        if (!customer) return res.status(400).send();
+        if (!customer) return res.status(404).send();
         const order = await new Order({
             ...req.body,
             customer: customer._id,
