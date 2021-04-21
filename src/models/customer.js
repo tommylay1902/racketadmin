@@ -10,13 +10,7 @@ customerSchema = new mongoose.Schema({
         ref: "User",
     },
 });
-customerSchema.methods.toJSON = function () {
-    const cust = this;
-    const custObject = cust.toObject();
 
-    delete custObject.phoneNumber;
-    return custObject;
-};
 customerSchema.virtual("orders", {
     ref: "order",
     localField: "_id",

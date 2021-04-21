@@ -24,6 +24,33 @@ router.post("/customers", auth, async (req, res) => {
     }
 });
 
+router.put("/customers/:id", auth, async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ["name", "phoneNumber"];
+    //checks to see if every element arr is valid update parameter
+    const isAllowed = updates.every((i) => allowedUpdates.includes(i));
+
+    //return bad request if any update parameters are not allowed
+    if (!isAllowed)
+        return res.status(400).send({ error: "invalid operation!" });
+
+    try {
+        const customer = await Customer.findOne({
+            user: req.user._id,
+        });
+
+        if (!customer) return res.sendStatus(404);
+
+        updates.forEach((update) => {
+            customer[update] = req.body[update];
+        });
+        await customer.save();
+        res.send(customer);
+    } catch (e) {
+        res.status(400).send();
+    }
+});
+
 router.delete("/customers/:id", auth, async (req, res) => {
     try {
         const customer = await Customer.findOne({
@@ -36,7 +63,7 @@ router.delete("/customers/:id", auth, async (req, res) => {
         await customer.remove();
         res.send();
     } catch (e) {
-        res.status().send();
+        res.sendStatus(400);
     }
 });
 

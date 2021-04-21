@@ -58,7 +58,7 @@ router.post("/orders/:id", auth, async (req, res) => {
         });
 
         if (!customer) return res.status(404).send();
-        const order = await new Order({
+        const order = new Order({
             ...req.body,
             customer: customer._id,
         });
@@ -94,7 +94,7 @@ router.delete("/orders/:id", auth, async (req, res) => {
     } catch (e) {}
 });
 
-router.patch("/orders/:id", auth, async (req, res) => {
+router.put("/orders/:id", auth, async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = [
         "racketBrand",

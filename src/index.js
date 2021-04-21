@@ -2,6 +2,7 @@ const express = require("express");
 const userRouter = require("./routers/user");
 const orderRouter = require("./routers/order");
 const customerRouter = require("./routers/customer");
+const stockRouter = require("./routers/stock");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(userRouter);
 app.use(orderRouter);
 app.use(customerRouter);
+app.use(stockRouter);
 
 app.get("/", async (req, res) => {
     res.send({

@@ -40,11 +40,14 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.statics.findUser = async (email, pass) => {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
+
     if (!user) {
         throw new Error("Unable to login");
     }
+
     const isMatch = await bcrypt.compare(pass, user.password);
+    console.log("here");
     if (!isMatch) {
         throw new Error("Unable to login");
     }
@@ -55,10 +58,7 @@ userSchema.statics.findUser = async (email, pass) => {
 userSchema.methods.generateAuthToken = async function () {
     try {
         const user = this;
-        const token = jwt.sign(
-            { _id: user._id },
-            process.env.JWT_SECRET || "thisisasecretformformyapp"
-        );
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
         user.tokens = user.tokens.concat({ token });
         await user.save();
         return token;
