@@ -101,6 +101,7 @@ router.put("/orders/:id", auth, async (req, res) => {
         "model",
         "stringPattern",
         "recTension",
+        "desiredTension",
         "stringType",
     ];
     //checks to see if every element arr is valid update parameter
