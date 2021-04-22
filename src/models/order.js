@@ -9,6 +9,7 @@ orderSchema = new mongoose.Schema(
         stringPattern: String,
         recTension: String,
         stringType: String,
+        desiredTension: String,
         completed: {
             type: Boolean,
             default: false,

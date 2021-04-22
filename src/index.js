@@ -5,13 +5,15 @@ const customerRouter = require("./routers/customer");
 const stockRouter = require("./routers/stock");
 const cors = require("cors");
 require("dotenv").config();
-const app = express();
 
+const app = express();
+//set up port for specified environment
 const port = process.env.PORT;
 
+//json middleware
 app.use(express.json());
 
-//set up cors
+//set up cors middleware
 app.use(cors());
 
 //set up routers
@@ -52,6 +54,6 @@ app.get("/", async (req, res) => {
     });
 });
 
-app.listen(port || 3001, () => {
+app.listen(port, () => {
     if (port === 3001) console.log(`http:localhost/${port}`);
 });
