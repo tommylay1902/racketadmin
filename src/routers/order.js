@@ -103,6 +103,7 @@ router.put("/orders/:id", auth, async (req, res) => {
         "recTension",
         "desiredTension",
         "stringType",
+        "dueDate",
     ];
     //checks to see if every element arr is valid update parameter
     const isAllowed = updates.every((i) => allowedUpdates.includes(i));
