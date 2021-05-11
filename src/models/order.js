@@ -14,7 +14,9 @@ orderSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
-
+        dueDate: {
+            type: Date,
+        },
         customer: {
             type: mongoose.Schema.Types.ObjectId,
             //implement required customer later
