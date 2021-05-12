@@ -51,6 +51,7 @@ router.put("/stock/:id", auth, async (req, res) => {
     try {
         const stock = await Stock.findOne({
             user: req.user._id,
+            _id: req.params.id,
         });
 
         if (!stock) return res.sendStatus(404);
