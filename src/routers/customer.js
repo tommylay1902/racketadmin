@@ -37,6 +37,7 @@ router.put("/customers/:id", auth, async (req, res) => {
     try {
         const customer = await Customer.findOne({
             user: req.user._id,
+            _id: req.params.id,
         });
 
         if (!customer) return res.sendStatus(404);
